@@ -1,16 +1,29 @@
-# flutter_pizza_delivery
+# Pizza Delivery
 
-A new Flutter project.
+Como atividade final da matéria de programação orientada a objetos
+do curso de Analise e desenvolvimento de sistemas da Fatec
+foi proposto a criação de um código inspirado em aplicativos de entrega.
 
-## Getting Started
+Com liberdade de decidir como seria feito 
+optei pelo desafio de utilizar uma linguagem e framework que ainda não conhecia,
+com o objetivo de ao invés de mostrar um código, apresentar um aplicativo para celular
 
-This project is a starting point for a Flutter application.
+##
 
-A few resources to get you started if this is your first Flutter project:
+# Flutter Pizza Delivery
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Para iniciar o projeto:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Para clonar o prjeto:
+'''
+git clone git@github.com:BrenoOPrado/Delivery_App.git
+'''
+
+Documentação e instalação do flutter:
+<a href="https://docs.flutter.dev/" target="_blank">Documentação do Flutter</a>
+<a href="https://docs.flutter.dev/get-started/install" target="_blank">Instalação do Flutter</a>
+
+Para instalar as dependencias:
+'''
+flutter pub get
+'''
