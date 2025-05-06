@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final Function(int) onItemSelected;
 
-  const MyAppBar({required this.title});
+  const MyAppBar({
+    super.key,
+    required this.title,
+    required this.onItemSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +25,21 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   value: 'Home',
                   child: Row(children: [Icon(Icons.home), Text(' Inicio')]),
                   onTap: () {
-                    print("Inicio");
+                    onItemSelected(0);
                   },
                 ),
                 PopupMenuItem<String>(
                   value: 'Feedback',
                   child: Row(children: [Icon(Icons.star), Text(' Avaliação')]),
                   onTap: () {
-                    print("Avaliação");
+                    onItemSelected(1);
                   },
                 ),
                 PopupMenuItem<String>(
                   value: 'Profile',
                   child: Row(children: [Icon(Icons.person), Text(' Perfil')]),
                   onTap: () {
-                    print("Perfil");
+                    onItemSelected(2);
                   },
                 ),
               ],
