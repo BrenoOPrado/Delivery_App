@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Widgets/AppBar/MyAppBar.dart';
 import 'Widgets/AppBody/CountBody.dart';
+import 'Widgets/AppBody/ProfileBody.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,7 +46,7 @@ class MyPageState extends State<MyPage> {
         return CountBody();
       case 2:
         print("Profile");
-        return CountBody();
+        return ProfileBody();
       default:
         return const Text('Página não encontrada');
     }
@@ -59,12 +60,18 @@ class MyPageState extends State<MyPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: MyAppBar(
         title: widget.title,
         onItemSelected: onAppBarItemSelected,
       ),
-      body: Center(child: getBody()),
+      body: Center(
+        widthFactor: screenWidth * 0.8,
+        heightFactor: screenWidth * 0.8,
+        child: getBody(),
+      ),
     );
   }
 }
