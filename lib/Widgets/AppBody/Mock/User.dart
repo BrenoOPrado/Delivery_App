@@ -4,6 +4,7 @@ class User {
   final String email;
   final int dddNumber;
   final int foneNumeber;
+  final int assessment;
 
   User({
     required this.id,
@@ -11,5 +12,6 @@ class User {
     required this.email,
     required this.dddNumber,
     required this.foneNumeber,
+    required this.assessment,
   });
 }

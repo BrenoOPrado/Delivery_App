@@ -39,13 +39,10 @@ class MyPageState extends State<MyPage> {
   Widget getBody() {
     switch (selectedPage) {
       case 0:
-        print("Home");
         return CountBody();
       case 1:
-        print("Feedback");
         return CountBody();
       case 2:
-        print("Profile");
         return ProfileBody();
       default:
         return const Text('Página não encontrada');
