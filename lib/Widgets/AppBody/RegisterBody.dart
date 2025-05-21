@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/ListUser.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/ListUserRepositorie.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/MotoboyUser.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Motorcycle.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 
 enum TipoCadastro { usuario, motoboy }
 
 class Registerbody extends StatefulWidget {
-  final Function(int) alterUser;
+  final Function alterUser;
   final Function(int) alterPage;
 
   const Registerbody({
@@ -19,23 +21,75 @@ class Registerbody extends StatefulWidget {
 }
 
 class _Registerbody extends State<Registerbody> {
-  final TextEditingController controlUser = TextEditingController();
-  final List<User> list = listUsers;
+  final TextEditingController controllName = TextEditingController();
+  final TextEditingController controllEmail = TextEditingController();
+  final TextEditingController controllDD = TextEditingController();
+  final TextEditingController controllFone = TextEditingController();
+
+  final TextEditingController controllWorkWallet = TextEditingController();
+  final TextEditingController controllDriverLicence = TextEditingController();
+  final TextEditingController controllBrand = TextEditingController();
+  final TextEditingController controllPlate = TextEditingController();
+
+  Listuserrepositorie rep = Listuserrepositorie();
   TipoCadastro tipoSelecionado = TipoCadastro.usuario;
 
   @override
   void dispose() {
-    controlUser.dispose();
+    controllName.dispose();
+    controllEmail.dispose();
+    controllDD.dispose();
+    controllFone.dispose();
+    controllWorkWallet.dispose();
+    controllDriverLicence.dispose();
+    controllBrand.dispose();
+    controllPlate.dispose();
     super.dispose();
   }
 
-  int findUser(String username) {
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].name == username) {
-        return i;
-      }
-    }
-    return -1;
+  void empyControll() {
+    controllName.text = '';
+    controllEmail.text = '';
+    controllDD.text = '';
+    controllFone.text = '';
+    controllWorkWallet.text = '';
+    controllDriverLicence.text = '';
+    controllBrand.text = '';
+    controllPlate.text = '';
+  }
+
+  User createUser(String name, String email, int dddNumber, int foneNumeber) {
+    return User(
+      id: rep.getAll().length,
+      name: name,
+      email: email,
+      dddNumber: dddNumber,
+      foneNumeber: foneNumeber,
+      assessment: 0,
+    );
+  }
+
+  MotoboyUser createMotoUser(
+    String name,
+    String email,
+    int dddNumber,
+    int foneNumeber,
+    String brand,
+    String plate,
+    String workWallet,
+    String driverLicence,
+  ) {
+    return MotoboyUser(
+      id: rep.getAll().length,
+      name: name,
+      email: email,
+      dddNumber: dddNumber,
+      foneNumeber: foneNumeber,
+      assessment: 0,
+      motorcycle: Motorcycle(brand: brand, plate: plate),
+      workWallet: workWallet,
+      driverLicence: driverLicence,
+    );
   }
 
   @override
@@ -46,14 +100,14 @@ class _Registerbody extends State<Registerbody> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           TextField(
-            controller: controlUser,
+            controller: controllName,
             decoration: const InputDecoration(
               labelText: 'Nome de usuario',
               border: OutlineInputBorder(),
             ),
           ),
           TextField(
-            //controller: controlUser,
+            controller: controllEmail,
             decoration: const InputDecoration(
               labelText: 'Email do usuario',
               border: OutlineInputBorder(),
@@ -63,6 +117,7 @@ class _Registerbody extends State<Registerbody> {
             children: [
               Expanded(
                 child: TextField(
+                  controller: controllDD,
                   decoration: const InputDecoration(
                     labelText: 'DD',
                     border: OutlineInputBorder(),
@@ -72,6 +127,7 @@ class _Registerbody extends State<Registerbody> {
               const SizedBox(width: 8),
               Expanded(
                 child: TextField(
+                  controller: controllFone,
                   decoration: const InputDecoration(
                     labelText: 'Telefone',
                     border: OutlineInputBorder(),
@@ -106,28 +162,28 @@ class _Registerbody extends State<Registerbody> {
               : (Column(
                 children: [
                   TextField(
-                    //controller: controlUser,
+                    controller: controllWorkWallet,
                     decoration: const InputDecoration(
                       labelText: 'Carteira de trabalho',
                       border: OutlineInputBorder(),
                     ),
                   ),
                   TextField(
-                    //controller: controlUser,
+                    controller: controllDriverLicence,
                     decoration: const InputDecoration(
                       labelText: 'Carteira de motorista',
                       border: OutlineInputBorder(),
                     ),
                   ),
                   TextField(
-                    //controller: controlUser,
+                    controller: controllBrand,
                     decoration: const InputDecoration(
                       labelText: 'Marca da motocicleta',
                       border: OutlineInputBorder(),
                     ),
                   ),
                   TextField(
-                    //controller: controlUser,
+                    controller: controllPlate,
                     decoration: const InputDecoration(
                       labelText: 'Placa da motocicleta',
                       border: OutlineInputBorder(),
@@ -141,12 +197,57 @@ class _Registerbody extends State<Registerbody> {
             children: [
               ElevatedButton(
                 onPressed: () {
+                  empyControll();
                   widget.alterPage(1);
                 },
                 child: Text("Voltar"),
               ),
               ElevatedButton(
                 onPressed: () {
+                  List<User> list = rep.getAll();
+                  dynamic newUser;
+                  bool isValid = true;
+                  if (tipoSelecionado == TipoCadastro.usuario) {
+                    newUser = createUser(
+                      controllName.text,
+                      controllEmail.text,
+                      int.parse(controllDD.text),
+                      int.parse(controllFone.text),
+                    );
+                  } else {
+                    newUser = createMotoUser(
+                      controllName.text,
+                      controllEmail.text,
+                      int.parse(controllDD.text),
+                      int.parse(controllFone.text),
+                      controllBrand.text,
+                      controllPlate.text,
+                      controllWorkWallet.text,
+                      controllDriverLicence.text,
+                    );
+                  }
+
+                  for (var i = 0; i < list.length; i++) {
+                    if (list[i].name == newUser.name ||
+                        list[i].email == newUser.email) {
+                      isValid = false;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Usuário já existente')),
+                      );
+                    }
+                  }
+
+                  if (isValid) {
+                    if (tipoSelecionado == TipoCadastro.usuario) {
+                      rep.addUser(newUser);
+                    } else {
+                      rep.addMotoUser(newUser);
+                    }
+                    widget.alterUser(newUser.id);
+                  }
+
+                  empyControll();
+
                   widget.alterPage(0);
                 },
                 child: Text("Cadastrar"),

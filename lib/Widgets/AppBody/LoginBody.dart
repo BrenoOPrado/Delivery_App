@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/ListUserRepositorie.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/ListUser.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 
 class Loginbody extends StatefulWidget {
-  final Function(int) alterUser;
+  final Function alterUser;
   final Function(int) alterPage;
 
   const Loginbody({
@@ -18,22 +19,12 @@ class Loginbody extends StatefulWidget {
 
 class _Loginbody extends State<Loginbody> {
   final TextEditingController controlUser = TextEditingController();
-  final List<User> list = listUsers;
-  int userSelected = 0;
+  Listuserrepositorie rep = Listuserrepositorie();
 
   @override
   void dispose() {
     controlUser.dispose();
     super.dispose();
-  }
-
-  int findUser(String username) {
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].name == username) {
-        return i;
-      }
-    }
-    return -1;
   }
 
   @override
@@ -69,9 +60,9 @@ class _Loginbody extends State<Loginbody> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  final index = findUser(controlUser.text);
-                  if (index != -1) {
-                    widget.alterUser(index);
+                  final User user = rep.getByName(controlUser.text);
+                  if (user != Null) {
+                    widget.alterUser(user.id);
                     controlUser.text = "";
                     widget.alterPage(0);
                   } else {

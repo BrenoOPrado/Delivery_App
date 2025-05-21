@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/ListUserRepositorie.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 import 'Widgets/AppBar/MyAppBar.dart';
 import 'Widgets/AppBody/CountBody.dart';
 import 'Widgets/AppBody/ProfileBody.dart';
@@ -35,6 +37,18 @@ class MyPage extends StatefulWidget {
 
 class MyPageState extends State<MyPage> {
   int selectedPage = 0;
+  Listuserrepositorie rep = Listuserrepositorie();
+  late User user = rep.baseUser;
+
+  MyPageState() {
+    user = rep.baseUser;
+  }
+
+  void alterUser(int userId) {
+    setState(() {
+      user = rep.getById(userId);
+    });
+  }
 
   Widget getBody() {
     switch (selectedPage) {
@@ -43,7 +57,7 @@ class MyPageState extends State<MyPage> {
       case 1:
         return CountBody();
       case 2:
-        return ProfileBody();
+        return ProfileBody(alterUser: alterUser, user: user);
       default:
         return const Text('Página não encontrada');
     }
