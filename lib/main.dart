@@ -37,7 +37,7 @@ class MyPage extends StatefulWidget {
 
 class MyPageState extends State<MyPage> {
   int selectedPage = 0;
-  Listuserrepositorie rep = Listuserrepositorie();
+  ListUserRepositorie rep = ListUserRepositorie();
   late User user = rep.baseUser;
 
   MyPageState() {

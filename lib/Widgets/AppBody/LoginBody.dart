@@ -19,7 +19,7 @@ class Loginbody extends StatefulWidget {
 
 class _Loginbody extends State<Loginbody> {
   final TextEditingController controlUser = TextEditingController();
-  Listuserrepositorie rep = Listuserrepositorie();
+  ListUserRepositorie rep = ListUserRepositorie();
 
   @override
   void dispose() {

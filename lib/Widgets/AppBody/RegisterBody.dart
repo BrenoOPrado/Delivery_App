@@ -31,7 +31,7 @@ class _Registerbody extends State<Registerbody> {
   final TextEditingController controllBrand = TextEditingController();
   final TextEditingController controllPlate = TextEditingController();
 
-  Listuserrepositorie rep = Listuserrepositorie();
+  ListUserRepositorie rep = ListUserRepositorie();
   TipoCadastro tipoSelecionado = TipoCadastro.usuario;
 
   @override

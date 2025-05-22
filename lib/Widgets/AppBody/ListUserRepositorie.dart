@@ -2,7 +2,7 @@ import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/MotoboyUser.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/ListUser.dart';
 
-class Listuserrepositorie {
+class ListUserRepositorie {
   final User baseUser = User(
     id: 0,
     name: "Usuario",
@@ -13,71 +13,53 @@ class Listuserrepositorie {
   );
 
   List<User> getAll() {
-    try {
-      return List<User>.from(listUsers);
-    } catch (e) {
-      return [baseUser];
-    }
+    return listUsers;
   }
 
   User getById(int id) {
-    List<User> list = getAll();
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id == id) {
-        return list[i];
-      }
-    }
-    return baseUser;
+    return listUsers.firstWhere(
+      (user) => user.id == id,
+      orElse: () => baseUser,
+    );
   }
 
   User getByName(String name) {
-    List<User> list = getAll();
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].name == name) {
-        return list[i];
-      }
-    }
-    return baseUser;
+    return listUsers.firstWhere(
+      (user) => user.name == name,
+      orElse: () => baseUser,
+    );
   }
 
   User getByEmail(String email) {
-    List<User> list = getAll();
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].email == email) {
-        return list[i];
-      }
-    }
-    return baseUser;
+    return listUsers.firstWhere(
+      (user) => user.email == email,
+      orElse: () => baseUser,
+    );
   }
 
   void deleteById(int id) {
-    List<User> list = getAll();
-    list.remove(getById(id));
+    listUsers.removeWhere((user) => user.id == id);
   }
 
   void addUser(User user) {
-    List<User>.from(listUsers).add(user);
+    listUsers.add(user);
   }
 
   void addMotoUser(MotoboyUser user) {
-    List<User>.from(listUsers).add(user);
+    listUsers.add(user);
   }
 
   void alterUserById(int id, User user) {
-    List<User> list = getAll();
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id == id) {
-        List<User>.from(listUsers)[i] = user;
-      }
+    final index = listUsers.indexWhere((u) => u.id == id);
+    if (index != -1) {
+      listUsers[index] = user;
     }
   }
 
   void alterMotoUserById(int id, MotoboyUser user) {
-    List<User> list = getAll();
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id == id) {
-        List<User>.from(listUsers)[i] = user;
-      }
+    final index = listUsers.indexWhere((u) => u.id == id);
+    if (index != -1) {
+      listUsers[index] = user;
     }
   }
 }
