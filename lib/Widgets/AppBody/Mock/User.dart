@@ -1,10 +1,11 @@
 class User {
   final int id;
-  final String name;
-  final String email;
-  final int dddNumber;
-  final int foneNumeber;
-  final int assessment;
+  late String name;
+  late String email;
+  late int dddNumber;
+  late int foneNumeber;
+  late int assessment;
+  late int numAssessment;
 
   User({
     required this.id,
@@ -13,5 +14,6 @@ class User {
     required this.dddNumber,
     required this.foneNumeber,
     required this.assessment,
+    required this.numAssessment,
   });
 }

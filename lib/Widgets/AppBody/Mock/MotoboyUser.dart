@@ -2,9 +2,9 @@ import 'User.dart';
 import 'Motorcycle.dart';
 
 class MotoboyUser extends User {
-  final Motorcycle motorcycle;
-  final String workWallet;
-  final String driverLicence;
+  late Motorcycle motorcycle;
+  late String workWallet;
+  late String driverLicence;
 
   MotoboyUser({
     required int id,
@@ -13,6 +13,7 @@ class MotoboyUser extends User {
     required int dddNumber,
     required int foneNumeber,
     required int assessment,
+    required int numAssessment,
     required this.motorcycle,
     required this.workWallet,
     required this.driverLicence,
@@ -23,5 +24,6 @@ class MotoboyUser extends User {
          dddNumber: dddNumber,
          foneNumeber: foneNumeber,
          assessment: assessment,
+         numAssessment: numAssessment,
        );
 }

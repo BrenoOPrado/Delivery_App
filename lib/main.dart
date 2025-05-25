@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/AvaliationPage/AvaliationBody.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/HomePage/HomeBody.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/ListUserRepositorie.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 import 'Widgets/AppBar/MyAppBar.dart';
-import 'Widgets/AppBody/CountBody.dart';
-import 'Widgets/AppBody/ProfileBody.dart';
+import 'Widgets/AppBody/ProfilePage/ProfileBody.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,9 +54,9 @@ class MyPageState extends State<MyPage> {
   Widget getBody() {
     switch (selectedPage) {
       case 0:
-        return CountBody();
+        return HomeBody();
       case 1:
-        return CountBody();
+        return AvaliationBody();
       case 2:
         return ProfileBody(alterUser: alterUser, user: user);
       default:

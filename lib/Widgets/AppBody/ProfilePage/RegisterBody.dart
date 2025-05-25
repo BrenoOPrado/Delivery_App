@@ -66,6 +66,7 @@ class _Registerbody extends State<Registerbody> {
       dddNumber: dddNumber,
       foneNumeber: foneNumeber,
       assessment: 0,
+      numAssessment: 0,
     );
   }
 
@@ -86,6 +87,7 @@ class _Registerbody extends State<Registerbody> {
       dddNumber: dddNumber,
       foneNumeber: foneNumeber,
       assessment: 0,
+      numAssessment: 0,
       motorcycle: Motorcycle(brand: brand, plate: plate),
       workWallet: workWallet,
       driverLicence: driverLicence,

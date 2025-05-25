@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/LoginBody.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/ProfilePage/LoginBody.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/PersonBody.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/RegisterBody.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/ProfilePage/PersonBody.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/ProfilePage/RegisterBody.dart';
 
 class ProfileBody extends StatefulWidget {
   final Function alterUser;

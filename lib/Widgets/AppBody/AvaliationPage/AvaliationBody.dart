@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class CountBody extends StatefulWidget {
-  const CountBody({super.key});
+class AvaliationBody extends StatefulWidget {
+  const AvaliationBody({super.key});
 
   @override
-  State<CountBody> createState() => _CountBodyState();
+  State<AvaliationBody> createState() => _AvaliationBodyState();
 }
 
-class _CountBodyState extends State<CountBody> {
+class _AvaliationBodyState extends State<AvaliationBody> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -21,6 +21,7 @@ class _CountBodyState extends State<CountBody> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        Text('Avaliação!'),
         const Text('Como avalia sua entrega?'),
         Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
         const SizedBox(height: 16),

@@ -10,6 +10,7 @@ class ListUserRepositorie {
     dddNumber: 0,
     foneNumeber: 0,
     assessment: 0,
+    numAssessment: 0,
   );
 
   List<User> getAll() {
@@ -61,5 +62,24 @@ class ListUserRepositorie {
     if (index != -1) {
       listUsers[index] = user;
     }
+  }
+
+  void addAssessmentById(int assessment, int id) {
+    var user = getById(id);
+    int index = listUsers.indexOf(user);
+    int newAssessment = assessment;
+
+    if (user.numAssessment <= 0) {
+      user.numAssessment = 1;
+    } else {
+      newAssessment =
+          (((user.assessment * user.numAssessment) + assessment) /
+                  user.numAssessment)
+              .round();
+      user.numAssessment += 1;
+    }
+
+    user.assessment = newAssessment;
+    listUsers[index] = user;
   }
 }
