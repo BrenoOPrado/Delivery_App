@@ -25,7 +25,7 @@ class _PersonBody extends State<PersonBody> {
 
   @override
   Widget build(BuildContext context) {
-    final int clampedRating = widget.user.assessment.clamp(0, 5);
+    final int clampedRating = widget.user.assessment.round().clamp(0, 5);
 
     return Scaffold(
       appBar: AppBar(

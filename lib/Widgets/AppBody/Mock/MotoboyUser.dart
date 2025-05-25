@@ -12,7 +12,7 @@ class MotoboyUser extends User {
     required String email,
     required int dddNumber,
     required int foneNumeber,
-    required int assessment,
+    required double assessment,
     required int numAssessment,
     required this.motorcycle,
     required this.workWallet,

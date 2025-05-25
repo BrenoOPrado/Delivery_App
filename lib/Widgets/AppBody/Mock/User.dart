@@ -4,7 +4,7 @@ class User {
   late String email;
   late int dddNumber;
   late int foneNumeber;
-  late int assessment;
+  late double assessment;
   late int numAssessment;
 
   User({

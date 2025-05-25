@@ -3,18 +3,12 @@ import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/ListUser.dart';
 
 class ListUserRepositorie {
-  final User baseUser = User(
-    id: 0,
-    name: "Usuario",
-    email: "",
-    dddNumber: 0,
-    foneNumeber: 0,
-    assessment: 0,
-    numAssessment: 0,
-  );
-
   List<User> getAll() {
     return listUsers;
+  }
+
+  User getBaseUser() {
+    return baseUser;
   }
 
   User getById(int id) {
@@ -64,21 +58,19 @@ class ListUserRepositorie {
     }
   }
 
-  void addAssessmentById(int assessment, int id) {
+  void addAssessmentById(double assessment, int id) {
     var user = getById(id);
     int index = listUsers.indexOf(user);
-    int newAssessment = assessment;
+    double newAssessment = assessment;
 
     if (user.numAssessment <= 0) {
       user.numAssessment = 1;
     } else {
-      newAssessment =
-          (((user.assessment * user.numAssessment) + assessment) /
-                  user.numAssessment)
-              .round();
+      newAssessment = (((user.assessment * user.numAssessment) + assessment) /
+              (user.numAssessment + 1))
+          .clamp(0, 5);
       user.numAssessment += 1;
     }
-
     user.assessment = newAssessment;
     listUsers[index] = user;
   }

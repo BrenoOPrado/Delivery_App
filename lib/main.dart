@@ -39,10 +39,11 @@ class MyPage extends StatefulWidget {
 class MyPageState extends State<MyPage> {
   int selectedPage = 0;
   ListUserRepositorie rep = ListUserRepositorie();
-  late User user = rep.baseUser;
+  late User baseUser = rep.getBaseUser();
+  late User user = baseUser;
 
   MyPageState() {
-    user = rep.baseUser;
+    user = baseUser;
   }
 
   void alterUser(int userId) {
@@ -56,7 +57,7 @@ class MyPageState extends State<MyPage> {
       case 0:
         return HomeBody();
       case 1:
-        return AvaliationBody();
+        return AvaliationBody(user: user, onItemSelected: onAppBarItemSelected);
       case 2:
         return ProfileBody(alterUser: alterUser, user: user);
       default:
