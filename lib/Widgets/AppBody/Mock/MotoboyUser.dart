@@ -14,6 +14,7 @@ class MotoboyUser extends User {
     required int foneNumeber,
     required double assessment,
     required int numAssessment,
+    required List<String> mensageBox,
     required this.motorcycle,
     required this.workWallet,
     required this.driverLicence,
@@ -25,5 +26,6 @@ class MotoboyUser extends User {
          foneNumeber: foneNumeber,
          assessment: assessment,
          numAssessment: numAssessment,
+         mensageBox: mensageBox,
        );
 }

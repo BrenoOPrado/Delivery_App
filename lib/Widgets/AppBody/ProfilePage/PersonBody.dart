@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/MotoboyUser.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/ListUserRepositorie.dart';
 
 class PersonBody extends StatefulWidget {
   final User user;
@@ -13,6 +14,7 @@ class PersonBody extends StatefulWidget {
 }
 
 class _PersonBody extends State<PersonBody> {
+  ListUserRepositorie rep = ListUserRepositorie();
   int userSelected = 0;
 
   @override
@@ -100,6 +102,98 @@ class _PersonBody extends State<PersonBody> {
                 );
               }),
             ),
+            SizedBox(height: 10),
+            Text(
+              'Caixa de mensagens: (${widget.user.mensageBox.length})',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            SizedBox(height: 10),
+            widget.user.mensageBox.isEmpty
+                ? Text(
+                  'Nenhuma mensagem disponível.',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                )
+                : Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: widget.user.mensageBox.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Card(
+                          elevation: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${index + 1}. ',
+                                  style: Theme.of(context).textTheme.bodyMedium!
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    widget.user.mensageBox[index],
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+            (widget.user.id == 1)
+                ? ElevatedButton(
+                  child: Text('Enviar Mensagem aos usuários'),
+                  onPressed: () {
+                    TextEditingController _controller = TextEditingController();
+
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Nova mensagem'),
+                          content: TextField(
+                            controller: _controller,
+                            decoration: InputDecoration(
+                              hintText: 'Digite a mensagem',
+                            ),
+                            maxLines: 3,
+                          ),
+                          actions: [
+                            TextButton(
+                              child: Text('Cancelar'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            ElevatedButton(
+                              child: Text('Enviar'),
+                              onPressed: () {
+                                final mensagem = _controller.text.trim();
+                                if (mensagem.isNotEmpty) {
+                                  rep.sendMensageUser(mensagem);
+                                  Navigator.of(context).pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Mensagem enviada!'),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                )
+                : SizedBox.shrink(),
           ],
         ),
       ),

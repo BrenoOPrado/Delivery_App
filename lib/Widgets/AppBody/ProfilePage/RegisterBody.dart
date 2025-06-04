@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/ListUserRepositorie.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/ListUserRepositorie.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/MotoboyUser.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Motorcycle.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
@@ -67,6 +67,7 @@ class _Registerbody extends State<Registerbody> {
       foneNumeber: foneNumeber,
       assessment: 0,
       numAssessment: 0,
+      mensageBox: [],
     );
   }
 
@@ -88,6 +89,7 @@ class _Registerbody extends State<Registerbody> {
       foneNumeber: foneNumeber,
       assessment: 0,
       numAssessment: 0,
+      mensageBox: [],
       motorcycle: Motorcycle(brand: brand, plate: plate),
       workWallet: workWallet,
       driverLicence: driverLicence,

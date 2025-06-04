@@ -1,6 +1,7 @@
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/MotoboyUser.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/ListUser.dart';
+import 'dart:math';
 
 class ListUserRepositorie {
   List<User> getAll() {
@@ -73,5 +74,27 @@ class ListUserRepositorie {
     }
     user.assessment = newAssessment;
     listUsers[index] = user;
+  }
+
+  void sendMensageUser(String mensage) {
+    List<User> users = getAll();
+    var index = 0;
+
+    users.forEach((user) {
+      if (user.id > 1) {
+        user.mensageBox.add(mensage);
+        listUsers[index] = user;
+      }
+      index += 1;
+    });
+  }
+
+  void sendOrderMotoUser(String mensage) {
+    List<User> users = getAll();
+    users.whereType<MotoboyUser>();
+
+    final random = Random();
+
+    users[random.nextInt(users.length)].mensageBox.add(mensage);
   }
 }

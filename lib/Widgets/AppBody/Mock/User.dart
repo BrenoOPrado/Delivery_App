@@ -6,6 +6,7 @@ class User {
   late int foneNumeber;
   late double assessment;
   late int numAssessment;
+  late List<String> mensageBox;
 
   User({
     required this.id,
@@ -15,5 +16,6 @@ class User {
     required this.foneNumeber,
     required this.assessment,
     required this.numAssessment,
+    required this.mensageBox,
   });
 }
