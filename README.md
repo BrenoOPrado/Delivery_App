@@ -1,29 +1,44 @@
-<h1 align="left">Pizza Delivery</h1>
 
-Como atividade final da matéria de programação orientada a objetos
-do curso de Analise e desenvolvimento de sistemas da Fatec
-foi proposto a criação de um código inspirado em aplicativos de entrega.
+# 🍕 Flutter Pizza Delivery App
 
-Com liberdade de decidir como seria feito 
-optei pelo desafio de utilizar uma linguagem e framework que ainda não conhecia,
-com o objetivo de ao invés de mostrar um código, apresentar um aplicativo para celular
+Um aplicativo de delivery de pizza desenvolvido com Flutter, simulando funcionalidades como cadastro de usuários, visualização de cardápio, avaliação e gerenciamento de entregadores.
 
-##
+## 📱 Funcionalidades
 
-<h1 align="left">Flutter Pizza Delivery</h1>
+- 🏠 **Tela Inicial** com destaque para os produtos
+- 👤 **Cadastro/Login de Usuários**
+- 🍕 **Catálogo de Pizzas** (com dados mockados)
+- 🛵 **Simulação de Entregadores (Motoboys)**
+- ⭐ **Avaliações de Pedidos**
+- 🧾 **Repositórios locais simulados** com dados de pizzas, usuários e pedidos
 
-<h2 align="left">Para iniciar o projeto:</h2>
+## 🚀 Como rodar o projeto
 
-<h3 align="left">Para clonar o prjeto:</h3>
-```
-git clone git@github.com:BrenoOPrado/Delivery_App.git
-```
+1. Clone o repositório:
+   ```bash
+   git clone <url-do-repositorio>
+   ```
+2. Navegue até a pasta do projeto:
+   ```bash
+   cd Pizza
+   ```
+3. Instale as dependências:
+   ```bash
+   flutter pub get
+   ```
+4. Execute o app:
+   ```bash
+   flutter run
+   ```
 
-<h3 align="left">Documentação e instalação do flutter:</h3>
-<a href="https://docs.flutter.dev/" target="_blank">Documentação do Flutter</a>
-<a href="https://docs.flutter.dev/get-started/install" target="_blank">Instalação do Flutter</a>
+## 📦 Dependências
 
-<h3 align="left">Para instalar as dependencias:</h3>
-```
-flutter pub get
-```
+- `flutter`
+- `cupertino_icons`
+- `flutter_launcher_icons`
+
+
+## 📄 Licença
+
+Este projeto é livre para estudo e modificação. Para uso comercial, entre em contato.
+
