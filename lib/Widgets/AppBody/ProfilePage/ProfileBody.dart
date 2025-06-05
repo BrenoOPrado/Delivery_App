@@ -19,17 +19,6 @@ class _ProfileBodyState extends State<ProfileBody> {
 
   final TextEditingController controlUser = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controlUser.dispose();
-    super.dispose();
-  }
-
   void alterPage(int page) {
     if (page >= 0 && page < 3) {
       setState(() {
@@ -38,32 +27,41 @@ class _ProfileBodyState extends State<ProfileBody> {
     }
   }
 
+  Widget _getBody() {
+    switch (profilePage) {
+      case 0:
+        return PersonBody(
+          key: ValueKey(widget.user.id),
+          user: widget.user,
+          alterPage: alterPage,
+        );
+      case 1:
+        return Loginbody(alterUser: widget.alterUser, alterPage: alterPage);
+      case 2:
+        return Registerbody(alterUser: widget.alterUser, alterPage: alterPage);
+      default:
+        return const Center(
+          child: Text(
+            'Página não encontrada',
+            style: TextStyle(fontSize: 18, color: Colors.red),
+          ),
+        );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget getBody() {
-      switch (profilePage) {
-        case 0:
-          return PersonBody(
-            key: ValueKey(widget.user.id),
-            user: widget.user,
-            alterPage: alterPage,
-          );
-        case 1:
-          return Loginbody(alterUser: widget.alterUser, alterPage: alterPage);
-        case 2:
-          return Registerbody(
-            alterUser: widget.alterUser,
-            alterPage: alterPage,
-          );
-        default:
-          return const Text('Página não encontrada');
-      }
-    }
-
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.all(20),
-      child: getBody(),
+    return Scaffold(
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 400),
+        switchInCurve: Curves.easeIn,
+        switchOutCurve: Curves.easeOut,
+        child: Padding(
+          key: ValueKey(profilePage),
+          padding: const EdgeInsets.all(20),
+          child: _getBody(),
+        ),
+      ),
     );
   }
 }

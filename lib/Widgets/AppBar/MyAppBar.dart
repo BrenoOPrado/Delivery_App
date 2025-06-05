@@ -13,36 +13,64 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      title: Text(title),
+      backgroundColor: Colors.orange.shade100, // cor mais suave
+      foregroundColor: Colors.black87,
+      elevation: 2, // visual mais leve
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          color: Colors.black87,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      centerTitle: true,
       actions: [
-        PopupMenuButton<String>(
-          icon: Icon(Icons.list), // ícone no AppBar
-          onSelected: (String value) {},
-          itemBuilder:
-              (BuildContext context) => <PopupMenuEntry<String>>[
-                PopupMenuItem<String>(
-                  value: 'Home',
-                  child: Row(children: [Icon(Icons.home), Text(' Inicio')]),
-                  onTap: () {
-                    onItemSelected(0);
-                  },
-                ),
-                PopupMenuItem<String>(
-                  value: 'Feedback',
-                  child: Row(children: [Icon(Icons.star), Text(' Avaliação')]),
-                  onTap: () {
-                    onItemSelected(1);
-                  },
-                ),
-                PopupMenuItem<String>(
-                  value: 'Profile',
-                  child: Row(children: [Icon(Icons.person), Text(' Perfil')]),
-                  onTap: () {
-                    onItemSelected(2);
-                  },
-                ),
-              ],
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: PopupMenuButton<String>(
+            icon: const Icon(Icons.menu, color: Colors.black87),
+            color: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            onSelected: (_) {},
+            itemBuilder:
+                (BuildContext context) => [
+                  PopupMenuItem<String>(
+                    value: 'Home',
+                    onTap: () => onItemSelected(0),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.home, color: Colors.deepOrange),
+                        SizedBox(width: 8),
+                        Text('Início'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'Feedback',
+                    onTap: () => onItemSelected(1),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.star, color: Colors.deepOrange),
+                        SizedBox(width: 8),
+                        Text('Avaliação'),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'Profile',
+                    onTap: () => onItemSelected(2),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.person, color: Colors.deepOrange),
+                        SizedBox(width: 8),
+                        Text('Perfil'),
+                      ],
+                    ),
+                  ),
+                ],
+          ),
         ),
       ],
     );
