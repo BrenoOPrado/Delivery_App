@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/ListUserRepositorie.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/UserRepository.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 
 class AvaliationBody extends StatefulWidget {
   final User user;
-  final Function(int) onItemSelected;
+  final Function(int) alterPage;
 
   const AvaliationBody({
     super.key,
     required this.user,
-    required this.onItemSelected,
+    required this.alterPage,
   });
 
   @override
@@ -17,7 +17,7 @@ class AvaliationBody extends StatefulWidget {
 }
 
 class _AvaliationBodyState extends State<AvaliationBody> {
-  ListUserRepositorie rep = ListUserRepositorie();
+  UserRepository rep = UserRepository();
   late List<User> list;
   int? hoveredIndex;
   Map<int, int> ratings = {};
@@ -45,7 +45,7 @@ class _AvaliationBodyState extends State<AvaliationBody> {
         children: [
           Text('Por favor autenticar antes de realizar avaliações'),
           TextButton(
-            onPressed: () => widget.onItemSelected(2),
+            onPressed: () => widget.alterPage(2),
             child: Text('Perfil'),
           ),
         ],
@@ -65,7 +65,7 @@ class _AvaliationBodyState extends State<AvaliationBody> {
           final int clampedRating = currentRating.clamp(0, 5);
 
           return ExpansionTile(
-            leading: Icon(Icons.person),
+            leading: Icon(thisUser.id == 1 ? Icons.local_pizza : Icons.person),
             title: Text(thisUser.name),
             subtitle: Text(
               '(${thisUser.dddNumber}) ${thisUser.foneNumeber}',

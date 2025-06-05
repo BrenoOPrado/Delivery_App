@@ -1,3 +1,5 @@
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Order.dart';
+
 class User {
   final int id;
   late String name;
@@ -7,6 +9,7 @@ class User {
   late double assessment;
   late int numAssessment;
   late List<String> mensageBox;
+  late List<Order> orders;
 
   User({
     required this.id,
@@ -17,5 +20,6 @@ class User {
     required this.assessment,
     required this.numAssessment,
     required this.mensageBox,
+    required this.orders,
   });
 }

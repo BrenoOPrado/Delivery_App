@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/AvaliationPage/AvaliationBody.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/HomePage/HomeBody.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/ListUserRepositorie.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/UserRepository.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 import 'Widgets/AppBar/MyAppBar.dart';
 import 'Widgets/AppBody/ProfilePage/ProfileBody.dart';
@@ -38,7 +38,7 @@ class MyPage extends StatefulWidget {
 
 class MyPageState extends State<MyPage> {
   int selectedPage = 0;
-  ListUserRepositorie rep = ListUserRepositorie();
+  UserRepository rep = UserRepository();
   late User baseUser = rep.getBaseUser();
   late User user = baseUser;
 
@@ -55,9 +55,9 @@ class MyPageState extends State<MyPage> {
   Widget getBody() {
     switch (selectedPage) {
       case 0:
-        return HomeBody();
+        return HomeBody(user: user, alterPage: onAppBarItemSelected);
       case 1:
-        return AvaliationBody(user: user, onItemSelected: onAppBarItemSelected);
+        return AvaliationBody(user: user, alterPage: onAppBarItemSelected);
       case 2:
         return ProfileBody(alterUser: alterUser, user: user);
       default:

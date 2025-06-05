@@ -1,9 +1,9 @@
-import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/MotoboyUser.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Order.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/ListUser.dart';
-import 'dart:math';
+// import 'dart:math';
 
-class ListUserRepositorie {
+class UserRepository {
   List<User> getAll() {
     return listUsers;
   }
@@ -41,18 +41,7 @@ class ListUserRepositorie {
     listUsers.add(user);
   }
 
-  void addMotoUser(MotoboyUser user) {
-    listUsers.add(user);
-  }
-
   void alterUserById(int id, User user) {
-    final index = listUsers.indexWhere((u) => u.id == id);
-    if (index != -1) {
-      listUsers[index] = user;
-    }
-  }
-
-  void alterMotoUserById(int id, MotoboyUser user) {
     final index = listUsers.indexWhere((u) => u.id == id);
     if (index != -1) {
       listUsers[index] = user;
@@ -89,12 +78,18 @@ class ListUserRepositorie {
     });
   }
 
-  void sendOrderMotoUser(String mensage) {
-    List<User> users = getAll();
-    users.whereType<MotoboyUser>();
+  void addOrder(Order order) {
+    User user = listUsers.where((user) => user.id == order.idUser).toList()[0];
+    int index = listUsers.indexOf(user);
 
-    final random = Random();
+    user.orders.add(order);
 
-    users[random.nextInt(users.length)].mensageBox.add(mensage);
+    if (user.orders.length == 5) {
+      user.mensageBox.add(
+        "Parabéns! Você é completou a quantia de fidelidade, obrigado por comprar conosco! Como prêmio seu próximo pedido de 1 pizza será gratuito!",
+      );
+    }
+
+    listUsers[index] = user;
   }
 }

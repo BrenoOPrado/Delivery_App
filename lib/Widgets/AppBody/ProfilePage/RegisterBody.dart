@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/ListUserRepositorie.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/MotoboyRepository.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/UserRepository.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/MotoboyUser.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Motorcycle.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
@@ -31,7 +32,8 @@ class _Registerbody extends State<Registerbody> {
   final TextEditingController controllBrand = TextEditingController();
   final TextEditingController controllPlate = TextEditingController();
 
-  ListUserRepositorie rep = ListUserRepositorie();
+  UserRepository repUser = UserRepository();
+  MotoboyRepository repMoto = MotoboyRepository();
   TipoCadastro tipoSelecionado = TipoCadastro.usuario;
 
   @override
@@ -60,7 +62,7 @@ class _Registerbody extends State<Registerbody> {
 
   User createUser(String name, String email, int dddNumber, int foneNumeber) {
     return User(
-      id: rep.getAll().length,
+      id: repUser.getAll().length,
       name: name,
       email: email,
       dddNumber: dddNumber,
@@ -68,6 +70,7 @@ class _Registerbody extends State<Registerbody> {
       assessment: 0,
       numAssessment: 0,
       mensageBox: [],
+      orders: [],
     );
   }
 
@@ -82,7 +85,7 @@ class _Registerbody extends State<Registerbody> {
     String driverLicence,
   ) {
     return MotoboyUser(
-      id: rep.getAll().length,
+      id: repUser.getAll().length,
       name: name,
       email: email,
       dddNumber: dddNumber,
@@ -90,9 +93,11 @@ class _Registerbody extends State<Registerbody> {
       assessment: 0,
       numAssessment: 0,
       mensageBox: [],
+      orders: [],
       motorcycle: Motorcycle(brand: brand, plate: plate),
       workWallet: workWallet,
       driverLicence: driverLicence,
+      toDelivery: [],
     );
   }
 
@@ -208,7 +213,7 @@ class _Registerbody extends State<Registerbody> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  List<User> list = rep.getAll();
+                  List<User> list = repUser.getAll();
                   dynamic newUser;
                   bool isValid = true;
                   if (tipoSelecionado == TipoCadastro.usuario) {
@@ -243,9 +248,9 @@ class _Registerbody extends State<Registerbody> {
 
                   if (isValid) {
                     if (tipoSelecionado == TipoCadastro.usuario) {
-                      rep.addUser(newUser);
+                      repUser.addUser(newUser);
                     } else {
-                      rep.addMotoUser(newUser);
+                      repMoto.addMotoUser(newUser);
                     }
                     widget.alterUser(newUser.id);
                   }

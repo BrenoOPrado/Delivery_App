@@ -11,6 +11,7 @@ final User baseUser = User(
   assessment: 0,
   numAssessment: 0,
   mensageBox: [],
+  orders: [],
 );
 
 final List<User> listUsers = [
@@ -24,6 +25,7 @@ final List<User> listUsers = [
     assessment: 5,
     numAssessment: 10,
     mensageBox: ["Perfil da Pizzaria"],
+    orders: [],
   ),
   User(
     id: 2,
@@ -34,6 +36,7 @@ final List<User> listUsers = [
     assessment: 4,
     numAssessment: 1,
     mensageBox: [],
+    orders: [],
   ),
   User(
     id: 3,
@@ -44,6 +47,7 @@ final List<User> listUsers = [
     assessment: 4,
     numAssessment: 1,
     mensageBox: [],
+    orders: [],
   ),
   MotoboyUser(
     id: 4,
@@ -54,8 +58,10 @@ final List<User> listUsers = [
     assessment: 5,
     numAssessment: 1,
     mensageBox: [],
-    motorcycle: Motorcycle(brand: "Yamaha", plate: "ABC-0D12"),
+    orders: [],
+    motorcycle: Motorcycle(brand: "Moto", plate: "ABC-0D12"),
     workWallet: "123456789123",
     driverLicence: "123456789123",
+    toDelivery: [],
   ),
 ];

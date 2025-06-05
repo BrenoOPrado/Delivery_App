@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/ListUserRepositorie.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/UserRepository.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 
 class Loginbody extends StatefulWidget {
@@ -18,7 +18,7 @@ class Loginbody extends StatefulWidget {
 
 class _Loginbody extends State<Loginbody> {
   final TextEditingController controlUser = TextEditingController();
-  ListUserRepositorie rep = ListUserRepositorie();
+  UserRepository rep = UserRepository();
 
   @override
   void dispose() {

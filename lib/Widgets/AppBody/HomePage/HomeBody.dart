@@ -1,26 +1,144 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Order.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Pizza.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/ListPizzaRepository.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/MotoboyRepository.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/PizzaRepository.dart';
 
 class HomeBody extends StatefulWidget {
-  const HomeBody({super.key});
+  final User user;
+  final Function(int) alterPage;
+
+  const HomeBody({super.key, required this.user, required this.alterPage});
 
   @override
   State<HomeBody> createState() => _HomeBodyState();
 }
 
 class _HomeBodyState extends State<HomeBody> {
-  final ListPizzaRepository pizzaRep = ListPizzaRepository();
+  final PizzaRepository pizzaRep = PizzaRepository();
+  MotoboyRepository motoboyRep = MotoboyRepository();
   int? _selectedIndex;
+  Order? order;
 
   @override
   Widget build(BuildContext context) {
     final List<Pizza> pizzaList = pizzaRep.getAll();
 
+    void createOrder() {
+      order = Order(
+        id: widget.user.orders.length,
+        idUser: widget.user.id,
+        pizza: [],
+        delivered: false,
+      );
+    }
+
+    void addPizzaInOrder(int? pizzaId) {
+      if (pizzaId == null) return;
+
+      if (widget.user.id <= 1) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Por favor realizar o Login')),
+        );
+        widget.alterPage(2);
+        return;
+      }
+
+      if (order == null) {
+        createOrder();
+      }
+
+      final selectedPizza = pizzaList.firstWhere(
+        (pizza) => pizza.id == pizzaId,
+        orElse: () => throw Exception('Pizza com ID $pizzaId não encontrada.'),
+      );
+
+      order!.pizza.add(
+        Pizza(
+          id: pizzaId,
+          name: selectedPizza.name,
+          ingredients: selectedPizza.ingredients,
+        ),
+      );
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Adicionado ao carrinho')));
+    }
+
+    void showCart() {
+      showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        ),
+        builder: (context) {
+          return SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Seu Pedido',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 16),
+                  ...order!.pizza.map(
+                    (pizza) => ListTile(
+                      leading: const Icon(Icons.local_pizza),
+                      title: Text(pizza.name),
+                      subtitle: Text(pizza.ingredients.join(', ')),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Pedido enviado!')),
+                      );
+                      motoboyRep.sendOrderMotoUser(order!);
+                      setState(() {
+                        order = null;
+                      });
+                    },
+                    icon: const Icon(Icons.check),
+                    label: const Text('Finalizar Pedido'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepOrange,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size.fromHeight(48),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Catálogo de Pizzas'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            tooltip: 'Ver carrinho',
+            onPressed: () {
+              if (order == null || order!.pizza.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('O carrinho está vazio')),
+                );
+              } else {
+                showCart();
+              }
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -68,7 +186,7 @@ class _HomeBodyState extends State<HomeBody> {
                       boxShadow: [
                         if (isSelected)
                           BoxShadow(
-                            color: Colors.orange.withOpacity(0.3),
+                            color: Colors.orange.withValues(),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),
@@ -98,9 +216,7 @@ class _HomeBodyState extends State<HomeBody> {
                         if (isSelected)
                           ElevatedButton.icon(
                             onPressed: () {
-                              print(
-                                'Pizza selecionada: ID = ${pizza.id}', // Editar a funcionalidade!!!!
-                              );
+                              addPizzaInOrder(pizza.id);
                             },
                             icon: const Icon(Icons.add_shopping_cart),
                             label: const Text("Adicionar"),

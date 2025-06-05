@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/MotoboyUser.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
-import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/ListUserRepositorie.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/UserRepository.dart';
 
 class PersonBody extends StatefulWidget {
   final User user;
@@ -14,7 +14,7 @@ class PersonBody extends StatefulWidget {
 }
 
 class _PersonBody extends State<PersonBody> {
-  ListUserRepositorie rep = ListUserRepositorie();
+  UserRepository rep = UserRepository();
   int userSelected = 0;
 
   @override
