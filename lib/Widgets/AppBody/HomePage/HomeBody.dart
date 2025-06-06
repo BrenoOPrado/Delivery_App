@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Order.dart';
+import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Holiday.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/Pizza.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Mock/User.dart';
 import 'package:flutter_pizza_delivery/Widgets/AppBody/Repository/MotoboyRepository.dart';
@@ -20,6 +21,16 @@ class _HomeBodyState extends State<HomeBody> {
   MotoboyRepository motoboyRep = MotoboyRepository();
   int? _selectedIndex;
   Order? order;
+
+  bool isFeriadoHoje() {
+    final hoje = DateTime.now();
+    return feriados.any(
+      (feriado) =>
+          feriado.day == hoje.day &&
+          feriado.month == hoje.month &&
+          feriado.year == hoje.year,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -140,99 +151,114 @@ class _HomeBodyState extends State<HomeBody> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            int crossAxisCount =
-                constraints.maxWidth > 800
-                    ? 4
-                    : constraints.maxWidth > 600
-                    ? 3
-                    : 2;
-
-            return GridView.builder(
-              itemCount: pizzaList.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                childAspectRatio: 3 / 4,
+      body: Column(
+        children: [
+          if (isFeriadoHoje())
+            Container(
+              padding: const EdgeInsets.all(16),
+              color: Colors.orange[100],
+              child: const Text(
+                'Hoje é feriado! Aproveite nossa promoção especial 🎉',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              itemBuilder: (context, index) {
-                final pizza = pizzaList[index];
-                final isSelected = _selectedIndex == index;
+            ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  int crossAxisCount =
+                      constraints.maxWidth > 800
+                          ? 4
+                          : constraints.maxWidth > 600
+                          ? 3
+                          : 2;
 
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedIndex = isSelected ? null : index;
-                    });
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeInOut,
-                    padding: const EdgeInsets.all(12.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color:
-                            isSelected
-                                ? Colors.deepOrange
-                                : Colors.grey.shade300,
-                        width: isSelected ? 2 : 1,
-                      ),
-                      boxShadow: [
-                        if (isSelected)
-                          BoxShadow(
-                            color: Colors.orange.withValues(),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                      ],
+                  return GridView.builder(
+                    itemCount: pizzaList.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 3 / 4,
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.local_pizza,
-                          size: isSelected ? 80 : 60,
-                          color: Colors.deepOrange,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          pizza.name,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          pizza.ingredients.join(', '),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                        const Spacer(),
-                        if (isSelected)
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              addPizzaInOrder(pizza.id);
-                            },
-                            icon: const Icon(Icons.add_shopping_cart),
-                            label: const Text("Adicionar"),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.deepOrange,
-                              foregroundColor: Colors.white,
+                    itemBuilder: (context, index) {
+                      final pizza = pizzaList[index];
+                      final isSelected = _selectedIndex == index;
+
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedIndex = isSelected ? null : index;
+                          });
+                        },
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color:
+                                  isSelected
+                                      ? Colors.deepOrange
+                                      : Colors.grey.shade300,
+                              width: isSelected ? 2 : 1,
                             ),
+                            boxShadow: [
+                              if (isSelected)
+                                BoxShadow(
+                                  color: Colors.orange.withOpacity(0.3),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                            ],
                           ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.local_pizza,
+                                size: isSelected ? 80 : 60,
+                                color: Colors.deepOrange,
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                pizza.name,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                pizza.ingredients.join(', '),
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              const Spacer(),
+                              if (isSelected)
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    addPizzaInOrder(pizza.id);
+                                  },
+                                  icon: const Icon(Icons.add_shopping_cart),
+                                  label: const Text("Adicionar"),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.deepOrange,
+                                    foregroundColor: Colors.white,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
